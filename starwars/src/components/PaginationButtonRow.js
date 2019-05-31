@@ -9,7 +9,7 @@ const PaginationButtonRow = ({
         .fill("")
         .map((_, i) => i + 1)
     return (
-        <div>
+        <div className="pagination-list">
             {buttonCount.map(count => (
                 <button key={count} onClick={() => handleClick(count)}>
                     {count}

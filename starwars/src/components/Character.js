@@ -6,7 +6,7 @@ const Character = ({ name, gender, planet }) => {
         planet.name
     }`
     return (
-        <li>
+        <li className="character">
             <h3>{name}</h3>
             <p>{bio}</p>
         </li>

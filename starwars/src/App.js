@@ -33,9 +33,10 @@ class App extends Component {
     render() {
         return (
             <div className="container">
+                <Header />
+
                 {this.state.isLoading && <LoadingIndicator />}
 
-                <Header />
                 <CharacterList characters={this.state.characters} />
                 <PaginationButtonRow
                     totalButtons={this.state.totalCount}

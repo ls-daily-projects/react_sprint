@@ -5,7 +5,7 @@ import Character from "./Character"
 
 const CharacterList = ({ characters }) => {
     return (
-        <ul>
+        <ul className="character-list">
             {characters.map(character => (
                 <Character key={uuid()} {...character} />
             ))}
