@@ -2,38 +2,45 @@ import React, { Component } from "react"
 
 import "./App.scss"
 
+import { getCharacters } from "./api"
+
+import LoadingIndicator from "./components/LoadingIndicator"
+import Header from "./components/Header"
+import CharacterList from "./components/CharacterList"
+import PaginationButtonRow from "./components/PaginationButtonRow"
+
 class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            starwarsChars: []
-        }
+    state = {
+        characters: [],
+        totalCount: 0,
+        isLoading: true
     }
 
     componentDidMount() {
-        this.getCharacters("https://swapi.co/api/people/")
+        this.loadPage()
     }
 
-    getCharacters = URL => {
-        // feel free to research what this code is doing.
-        // At a high level we are calling an API to fetch some starwars data from the open web.
-        // We then take that data and resolve it our state.
-        fetch(URL)
-            .then(res => {
-                return res.json()
+    loadPage(page) {
+        getCharacters((characters, totalCount) => {
+            this.setState({
+                characters,
+                totalCount,
+                isLoading: false
             })
-            .then(data => {
-                this.setState({ starwarsChars: data.results })
-            })
-            .catch(err => {
-                throw new Error(err)
-            })
+        }, page)
     }
 
     render() {
         return (
-            <div className="App">
-                <h1 className="Header">React Wars</h1>
+            <div className="container">
+                {this.state.isLoading && <LoadingIndicator />}
+
+                <Header />
+                <CharacterList characters={this.state.characters} />
+                <PaginationButtonRow
+                    totalButtons={this.state.totalCount}
+                    handleClick={this.loadPage.bind(this)}
+                />
             </div>
         )
     }
